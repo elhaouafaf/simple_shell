@@ -1,0 +1,131 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+/**
+ * _getenv - Get the value of an environment variable.
+ * @env_v: The environment variable to retrieve.
+ * Return: The value of the environment variable, or NULL if not found.
+ */
+char *_getenv(const char *env_v)
+{
+    extern char **environ;
+    int i = 0;
+    char *key;
+
+    while (environ[i])
+    {
+        key = strtok(environ[i], "=");
+        if (strcmp(env_v, key) == 0)
+            return (strtok(NULL, "\n"));
+        i++;
+    }
+    return (NULL);
+}
+
+char *get_command(char *command)
+{
+    struct stat st;
+    if (strchr(command, '/') != NULL)
+    {
+        if (stat(command, &st) == 0)
+        {
+            if (S_ISREG(st.st_mode) && (st.st_mode & S_IXUSR))
+                return strdup(command);
+        }
+    }
+    else
+    {
+        char *path = _getenv("PATH");
+        char *token;
+        char *full_cmd;
+
+        token = strtok(path, ":");
+        while (token)
+        {
+            full_cmd = malloc(strlen(token) + strlen(command) + 2);
+            strcpy(full_cmd, token);
+            strcat(full_cmd, "/");
+            strcat(full_cmd, command);
+            if (stat(full_cmd, &st) == 0)
+                return full_cmd;
+            free(full_cmd);
+            token = strtok(NULL, ":");
+        }
+    }
+    return NULL;
+}
+
+char **separate(char *buf, char *del)
+{
+    char **tokens;
+    char *token;
+    int i = 0;
+
+    tokens = malloc(sizeof(char *) * 1024);
+    token = strtok(buf, del);
+    while (token)
+    {
+        tokens[i] = token;
+        token = strtok(NULL, del);
+        i++;
+    }
+    tokens[i] = NULL;
+    return tokens;
+}
+
+int main(void)
+{
+    char *buf = NULL;
+    size_t buf_size = 0;
+    char *cmd;
+    char **args;
+    pid_t pid;
+    int status, num_chars;
+
+    while (1)
+    {
+        write(STDOUT_FILENO, "$ ", 2);
+        num_chars = getline(&buf, &buf_size, stdin);
+        if (num_chars == -1)
+        {
+            write(STDOUT_FILENO, "\n", 1);
+            exit(0);
+        }
+        args = separate(buf, " \t\n");
+        if (strcmp(args[0], "exit") == 0)
+            exit(0);
+        if (strcmp(args[0], "env") == 0)
+        {
+            extern char **environ;
+            int i = 0;
+            while (environ[i])
+            {
+                printf("%s\n", environ[i]);
+                i++;
+            }
+            continue;
+        }
+        pid = fork();
+        if (pid == 0)
+        {
+            cmd = get_command(args[0]);
+            if (cmd)
+                execve(cmd, args, NULL);
+            else
+            {
+                printf("%s: command not found\n", args[0]);
+                exit(127);
+            }
+        }
+        else
+        {
+            wait(&status);
+        }
+    }
+    return 0;
+}
