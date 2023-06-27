@@ -27,5 +27,6 @@ void handle_interrupt(int sig);
 char **handle_input(char **buf, size_t *buf_size);
 void free_args(char **args);
 
+void execute_command(char **args);
 #endif
 
