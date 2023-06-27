@@ -6,14 +6,9 @@
  */
 void handle_interrupt(int sig)
 {
-	char *buf = NULL;
 	(void)sig;
-
-	if (buf != NULL)
-	free(buf);
-	exit(0);
+	write(1,"\n$ ", 3);
 }
-
 /**
  * execute_command - Executes a command
  * @args: Command and arguments
