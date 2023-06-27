@@ -51,7 +51,7 @@ int main(void)
 	{
 	write(STDOUT_FILENO, "$ ", 2);
 	args = handle_input(&buf, &buf_size);
-	if (strcmp(args[0], "env") == 0)
+	if (_strcmp(args[0], "env") == 0)
 	print_env();
 	else
 	{
