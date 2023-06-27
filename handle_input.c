@@ -7,6 +7,7 @@
  */
 char **handle_input(char **buf, size_t *buf_size)
 {
+	char **args;
 	int num_chars = getline(buf, buf_size, stdin);
 
 	if (num_chars == -1)
@@ -14,7 +15,7 @@ char **handle_input(char **buf, size_t *buf_size)
 	free(*buf);
 	exit(0);
 	}
-	char **args = separate(*buf, " \t\n");
+	args = separate(*buf, " \t\n");
 
 	if (strcmp(args[0], "exit") == 0)
 	{

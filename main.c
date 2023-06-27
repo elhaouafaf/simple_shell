@@ -16,14 +16,18 @@ void handle_interrupt(int sig)
  * main - Entry point of the program
  * Return: Always 0
  */
+
 int main(void)
 {
-	char *buf = NULL;
-	size_t buf_size = 0;
-	signal(SIGINT, handle_interrupt);
-	char *cmd, **args;
-	pid_t pid;
 	int status;
+	char *buf, *cmd, **args;
+	size_t buf_size;
+	pid_t pid;
+
+	buf = NULL;
+	buf_size = 0;
+
+	signal(SIGINT, handle_interrupt);
 	while (1)
 	{
 	write(STDOUT_FILENO, "$ ", 2);
@@ -32,23 +36,31 @@ int main(void)
 	print_env();
 	else
 	{
-		pid = fork();
-		if (pid == 0)
+	pid = fork();
+	if (pid == 0)
 	{
-		cmd = get_command(args[0]);
-		if (cmd)
-		{
-			execve(cmd, args, NULL);
-			free(cmd);
-		}
-		else
-			exit(127);
-		}
+	cmd = get_command(args[0]);
+	if (cmd)
+	{
+	execve(cmd, args, NULL);
+	free(cmd);
+	exit(0);
+	}
+	else
+	{
+	write(2, "command not found\n", 19);
+	free_args(args);
+	free(buf);
+	exit(127);
+	}
+	}
 		else
 		wait(&status);
 	}
+	free(buf);
+	buf = NULL;
 	free_args(args);
 	}
-	free(buf);
 	return (0);
 }
+
