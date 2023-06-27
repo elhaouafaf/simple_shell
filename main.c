@@ -7,7 +7,7 @@
 void handle_interrupt(int sig)
 {
 	(void)sig;
-	write(1,"\n$ ", 3);
+	write(1, "\n$ ", 3);
 }
 /**
  * execute_command - Executes a command
