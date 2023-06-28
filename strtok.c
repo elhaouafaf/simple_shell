@@ -12,6 +12,7 @@
  */
 char *_strtok(char *str, const char *delim)
 {
+	char *token_start, *delimiter_pos;
 	static char *next_token = NULL;
 	bool delimiter_found = false;
 
@@ -24,8 +25,8 @@ char *_strtok(char *str, const char *delim)
 		return NULL;
 	}
 
-	char *token_start = next_token;
-	char *delimiter_pos = strstr(next_token, delim);
+	token_start = next_token;
+	delimiter_pos = strstr(next_token, delim);
 	if (delimiter_pos != NULL)
 	{
 		*delimiter_pos = '\0';
