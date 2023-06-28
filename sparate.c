@@ -11,6 +11,7 @@
  */
 char **separate(char *buf, char *del)
 {
+	char **temp;
 	char **tokens = NULL;
 	char *token = NULL;
 	int i = 0;
@@ -32,7 +33,7 @@ char **separate(char *buf, char *del)
 	if (i >= max_tokens)
 	{
 	max_tokens *= 2;
-	char **temp = realloc(tokens, sizeof(char *) * max_tokens);
+	temp = realloc(tokens, sizeof(char *) * max_tokens);
 
 	if (temp == NULL)
 	{
