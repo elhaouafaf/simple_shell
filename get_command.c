@@ -9,7 +9,7 @@ char *get_command(char *command)
 {
 	struct stat st;
 
-	if (strchr(command, '/') != NULL)
+	if (_strchr(command, '/') != NULL)
 	{
 		if (stat(command, &st) == 0)
 		{
@@ -23,7 +23,7 @@ char *get_command(char *command)
 		char *token;
 		char *full_cmd;
 
-		token = strtok(path, ":");
+		token = _strtok(path, ":");
 		while (token)
 		{
 			full_cmd = malloc(_strlen(token) + _strlen(command) + 2);
@@ -33,7 +33,7 @@ char *get_command(char *command)
 			if (stat(full_cmd, &st) == 0)
 				return (full_cmd);
 			free(full_cmd);
-			token = strtok(NULL, ":");
+			token = _strtok(NULL, ":");
 		}
 	}
 	return (NULL);

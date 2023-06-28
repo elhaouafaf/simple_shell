@@ -28,5 +28,6 @@ void free_args(char **args);
 void execute_command(char **args, char **cmd, char *buf);
 void handle_command(char **args);
 char *_strdup(const char *str);
+char *_strtok(char *str, const char *delim);
 
 #endif

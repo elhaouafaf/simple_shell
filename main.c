@@ -79,13 +79,13 @@ int main(void)
 		args = handle_input(&buf, &buf_size);
 		if (args == NULL)
 			continue;
-		if (strcmp(args[0], "exit") == 0)
+		if (_strcmp(args[0], "exit") == 0)
 		{
 			free_args(args);
 			free(buf);
 			exit(0);
 		}
-		if (strcmp(args[0], "env") == 0)
+		if (_strcmp(args[0], "env") == 0)
 			print_env();
 		else
 			execute_command(args, &cmd, buf);

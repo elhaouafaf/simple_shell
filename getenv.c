@@ -12,9 +12,9 @@ char *_getenv(const char *env_v)
 
 	while (environ[i])
 	{
-		key = strtok(environ[i], "=");
+		key = _strtok(environ[i], "=");
 		if (_strcmp(env_v, key) == 0)
-			return (strtok(NULL, "\n"));
+			return (_strtok(NULL, "\n"));
 		i++;
 	}
 	return (NULL);

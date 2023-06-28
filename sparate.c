@@ -24,7 +24,7 @@ char **separate(char *buf, char *del)
 	if (tokens == NULL)
 	return (NULL);
 
-	token = strtok(buf, del);
+	token = _strtok(buf, del);
 	while (token != NULL)
 	{
 	tokens[i] = token;
@@ -43,7 +43,7 @@ return (NULL);
 tokens = temp;
 }
 
-token = strtok(NULL, del);
+token = _strtok(NULL, del);
 }
 
 tokens[i] = NULL;
