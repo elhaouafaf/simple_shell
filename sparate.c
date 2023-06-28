@@ -1,4 +1,7 @@
 #include "main.h"
+#include <stdlib.h>
+#include <string.h>
+
 /**
  * separate - Tokenizes a string into an array of tokens
  * @buf: The string to be tokenized
@@ -8,18 +11,39 @@
  */
 char **separate(char *buf, char *del)
 {
-	char **tokens;
-	char *token;
+	char **tokens = NULL;
+	char *token = NULL;
 	int i = 0;
+	int max_tokens = 10; // Initial number of tokens (can be adjusted)
 
-	tokens = malloc(sizeof(char *) * 1024);
+	if (buf == NULL || del == NULL)
+	return (NULL);
+
+	tokens = malloc(sizeof(char *) * max_tokens);
+	if (tokens == NULL)
+	return (NULL);
+
 	token = strtok(buf, del);
-	while (token)
+	while (token != NULL)
 	{
-		tokens[i] = token;
-		token = strtok(NULL, del);
-		i++;
+	tokens[i] = token;
+	i++;
+
+	if (i >= max_tokens)
+	{
+	max_tokens *= 2; // Double the size of the tokens array
+	char **temp = realloc(tokens, sizeof(char *) * max_tokens);
+	if (temp == NULL)
+{
+	free(tokens);
+	return (NULL);
 	}
+	tokens = temp;
+ 	}
+
+	token = strtok(NULL, del);
+	}
+
 	tokens[i] = NULL;
 	return (tokens);
 }

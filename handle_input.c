@@ -15,7 +15,7 @@ char **handle_input(char **buf, size_t *buf_size)
 		free(*buf);
 		exit(0);
 	}
-	args = separate(*buf, " \t");
+	args = separate(*buf, " \t\n");
 	if (args[0] == NULL)
 	{
 		free_args(args);
