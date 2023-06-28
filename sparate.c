@@ -14,7 +14,7 @@ char **separate(char *buf, char *del)
 	char **tokens = NULL;
 	char *token = NULL;
 	int i = 0;
-	int max_tokens = 10; // Initial number of tokens (can be adjusted)
+	int max_tokens = 10;
 
 	if (buf == NULL || del == NULL)
 	return (NULL);
@@ -31,19 +31,20 @@ char **separate(char *buf, char *del)
 
 	if (i >= max_tokens)
 	{
-	max_tokens *= 2; // Double the size of the tokens array
+	max_tokens *= 2;
 	char **temp = realloc(tokens, sizeof(char *) * max_tokens);
+
 	if (temp == NULL)
-{
+	{
 	free(tokens);
-	return (NULL);
-	}
-	tokens = temp;
- 	}
+return (NULL);
+}
+tokens = temp;
+}
 
-	token = strtok(NULL, del);
-	}
+token = strtok(NULL, del);
+}
 
-	tokens[i] = NULL;
-	return (tokens);
+tokens[i] = NULL;
+return (tokens);
 }
