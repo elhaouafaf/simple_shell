@@ -10,7 +10,6 @@
 #include <sys/stat.h>
 #include <signal.h>
 
-
 extern char **environ;
 
 char *get_command(char *command);
@@ -26,7 +25,7 @@ int _putchar(char c);
 void handle_interrupt(int sig);
 char **handle_input(char **buf, size_t *buf_size);
 void free_args(char **args);
-char *_strdup(char *str);
-void execute_command(char **args);
-#endif
+void execute_command(char **args, char **cmd, char *buf);
+void handle_command(char **args);
 
+#endif

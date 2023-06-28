@@ -8,21 +8,18 @@
 char **handle_input(char **buf, size_t *buf_size)
 {
 	char **args;
-	int num_chars = getline(buf, buf_size, stdin);
+	ssize_t num_chars = getline(buf, buf_size, stdin);
 
 	if (num_chars == -1)
 	{
-	free(*buf);
-	exit(0);
+		free(*buf);
+		exit(0);
 	}
 	args = separate(*buf, " \t\n");
-
-	if (_strcmp(args[0], "exit") == 0)
+	if (args[0] == NULL)
 	{
-	free_args(args);
-	free(*buf);
-	exit(0);
+		free_args(args);
+		return (NULL);
 	}
 	return (args);
 }
-

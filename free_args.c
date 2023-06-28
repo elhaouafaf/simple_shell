@@ -7,7 +7,7 @@ void free_args(char **args)
 {
 	int i = 0;
 
-	while (args[i] != NULL)
+	while (args[i])
 	{
 		i++;
 	}
