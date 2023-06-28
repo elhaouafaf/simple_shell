@@ -1,6 +1,7 @@
 #include "main.h"
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 /**
  * _strtok - Tokenizes a string by a delimiter
@@ -11,7 +12,6 @@
  */
 char *_strtok(char *str, const char *delim)
 {
-	char *token_start;
 	static char *next_token = NULL;
 	bool delimiter_found = false;
 
@@ -24,21 +24,21 @@ char *_strtok(char *str, const char *delim)
 		return NULL;
 	}
 
-	token_start = next_token;
-	while (*next_token != '\0')
+	char *token_start = next_token;
+	char *delimiter_pos = strstr(next_token, delim);
+	if (delimiter_pos != NULL)
 	{
-		if (*next_token == *delim)
-		{
-			delimiter_found = true;
-			*next_token = '\0';
-			break;
-		}
-		next_token++;
+		*delimiter_pos = '\0';
+		next_token = delimiter_pos + strlen(delim);
+		delimiter_found = true;
+	}
+	else if (*next_token != '\0')
+	{
+		next_token += strlen(next_token);
 	}
 
 	if (delimiter_found)
 	{
-		next_token++;
 		return token_start;
 	}
 	else if (*token_start != '\0')
