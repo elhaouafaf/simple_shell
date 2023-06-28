@@ -14,7 +14,7 @@ char *get_command(char *command)
 		if (stat(command, &st) == 0)
 		{
 			if (S_ISREG(st.st_mode) && (st.st_mode & S_IXUSR))
-				return (strdup(command));
+				return (_strdup(command));
 		}
 	}
 	else
