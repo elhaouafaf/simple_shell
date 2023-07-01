@@ -12,6 +12,7 @@ char **handle_input(char **buf, size_t *buf_size)
 
 	if (num_chars == -1)
 	{
+		write(1, "\n", 1);
 		free(*buf);
 		exit(0);
 	}
