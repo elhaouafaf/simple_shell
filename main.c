@@ -75,17 +75,18 @@ int main(void)
 	signal(SIGINT, handle_interrupt);
 	while (1)
 	{
-		write(STDOUT_FILENO, "$ ", 2);
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "$ ", 2);
 		args = handle_input(&buf, &buf_size);
 		if (args == NULL)
 			continue;
-		if (_strcmp(args[0], "exit") == 0)
+		if (strcmp(args[0], "exit") == 0)
 		{
 			free_args(args);
 			free(buf);
 			exit(0);
 		}
-		if (_strcmp(args[0], "env") == 0)
+		if (strcmp(args[0], "env") == 0)
 			print_env();
 		else
 			execute_command(args, &cmd, buf);

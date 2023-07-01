@@ -9,12 +9,12 @@ char *get_command(char *command)
 {
 	struct stat st;
 
-	if (_strchr(command, '/') != NULL)
+	if (strchr(command, '/') != NULL)
 	{
 		if (stat(command, &st) == 0)
 		{
 			if (S_ISREG(st.st_mode) && (st.st_mode & S_IXUSR))
-				return (_strdup(command));
+				return (strdup(command));
 		}
 	}
 	else
@@ -26,10 +26,10 @@ char *get_command(char *command)
 		token = strtok(path, ":");
 		while (token)
 		{
-			full_cmd = malloc(_strlen(token) + _strlen(command) + 2);
-			_strcpy(full_cmd, token);
-			_strcat(full_cmd, "/");
-			_strcat(full_cmd, command);
+			full_cmd = malloc(strlen(token) + strlen(command) + 2);
+			strcpy(full_cmd, token);
+			strcat(full_cmd, "/");
+			strcat(full_cmd, command);
 			if (stat(full_cmd, &st) == 0)
 				return (full_cmd);
 			free(full_cmd);

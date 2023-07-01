@@ -20,13 +20,11 @@ int _strcmp(const char *s1, char *s2);
 char *_strcpy(char *dest, char *src);
 char *_strcat(char *dest, char *src);
 char *_strchr(char *s, char c);
-int _strlen(const char *s);
 int _putchar(char c);
 void handle_interrupt(int sig);
 char **handle_input(char **buf, size_t *buf_size);
 void free_args(char **args);
 void execute_command(char **args, char **cmd, char *buf);
 void handle_command(char **args);
-char *_strdup(const char *str);
 
 #endif
