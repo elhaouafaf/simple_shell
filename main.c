@@ -81,16 +81,16 @@ int main(void)
 		if (args == NULL)
 			continue;
 		if (!strcmp(args[0], "setenv") && args[1])
-   		{
-        	if (args[2])
+		{
+			if (args[2])
 				_setenv(args[1], args[2], 1);
-        	exit(0);
-    	}
-    	if (!strcmp(args[0], "unsetenv") && args[1])
-    	{
-        _unsetenv(args[1]);
-        exit(0);
-    	}
+			exit(0);
+		}
+		if (!strcmp(args[0], "unsetenv") && args[1])
+		{
+			_unsetenv(args[1]);
+			exit(0);
+		}
 		if (strcmp(args[0], "exit") == 0)
 		{
 			free_args(args);
