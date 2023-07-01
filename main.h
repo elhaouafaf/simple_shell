@@ -11,7 +11,8 @@
 #include <signal.h>
 
 extern char **environ;
-
+void _unsetenv(char *key);
+void _setenv(char *key, char *value, int overwrite);
 char *get_command(char *command);
 char *_getenv(const char *env_v);
 char **separate(char *buf, char *del);
