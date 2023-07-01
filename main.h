@@ -27,5 +27,6 @@ char **handle_input(char **buf, size_t *buf_size);
 void free_args(char **args);
 void execute_command(char **args, char **cmd, char *buf);
 void handle_command(char **args);
+void free_args_buf(char **args, char *buf);
 
 #endif

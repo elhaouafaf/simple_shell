@@ -67,42 +67,43 @@ void execute_command(char **args, char **cmd, char *buf)
  */
 int main(void)
 {
-	char *buf = NULL;
-	size_t buf_size = 0;
-	char **args;
-	char *cmd = NULL;
+    char *buf = NULL, **args, *cmd = NULL;
+    size_t buf_size = 0;
 
-	signal(SIGINT, handle_interrupt);
-	while (1)
-	{
-		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "$ ", 2);
-		args = handle_input(&buf, &buf_size);
-		if (args == NULL)
-			continue;
-		if (!strcmp(args[0], "setenv") && args[1])
-		{
-			if (args[2])
-				_setenv(args[1], args[2], 1);
-			exit(0);
-		}
-		if (!strcmp(args[0], "unsetenv") && args[1])
-		{
-			_unsetenv(args[1]);
-			exit(0);
-		}
-		if (strcmp(args[0], "exit") == 0)
-		{
-			free_args(args);
-			free(buf);
-			exit(0);
-		}
-		if (strcmp(args[0], "env") == 0)
-			print_env();
-		else
-			execute_command(args, &cmd, buf);
-		free_args(args);
-	}
-	free(buf);
-	return (0);
+    while (1)
+    {
+        if (isatty(STDIN_FILENO))
+            write(STDOUT_FILENO, "$ ", 2);
+        args = handle_input(&buf, &buf_size);
+        if (args == NULL)
+            continue;
+        if (!strcmp(args[0], "setenv") && args[1])
+        {
+            if (args[2])
+                _setenv(args[1], args[2], 1);
+            print_env();
+            free_args_buf(args, buf);
+            exit(0);
+        }
+        if (!strcmp(args[0], "unsetenv") && args[1])
+        {
+            _unsetenv(args[1]);
+            print_env();
+            free_args_buf(args, buf);
+            exit(0);
+        }
+        if (strcmp(args[0], "exit") == 0)
+        {
+            free_args(args);
+            free(buf);
+            exit(0);
+        }
+        if (strcmp(args[0], "env") == 0)
+            print_env();
+        else
+            execute_command(args, &cmd, buf);
+        free_args(args);
+    }
+    free(buf);
+    return (0);
 }
